@@ -1,4 +1,8 @@
-﻿namespace Assignment_oop04
+﻿using Assignment_oop04.Classes;
+using Assignment_oop04.Interfaces;
+using Assignment_oop04.Struct;
+
+namespace Assignment_oop04
 {
     internal class Program
     {
@@ -23,6 +27,75 @@
             //c)  Can a class inherit from multiple abstract classes? Can it implement multiple interfaces?
             //A: No, a class cannot inherit from more than one Abstract Class , Yes, a class can implement multiple Interfaces. 
             #endregion
+
+
+            #region Question03
+
+            DeliveryAddress address = new DeliveryAddress();
+
+             address = new DeliveryAddress()
+            {
+                City = "Alex",
+                Street = "pooo",
+                BuildingNumber = 5
+            };
+            StandardShipment standard = new StandardShipment("A001" , "Labtop" , 10.5 , 50 , address);
+            address = new DeliveryAddress()
+            {
+                City = "Cairo",
+                Street = "mooo",
+                BuildingNumber = 4
+            };
+            ExpressShipment express = new ExpressShipment(80 , "A002" , "Iphone 16" , 15.5 , 40 , address);
+            address = new DeliveryAddress()
+            {
+                City = "Zant",
+                Street = "aooo",
+                BuildingNumber = 8
+            };
+            InternationalShipment international = new InternationalShipment("Abas", 100, "A003 ", "Nokai 105", 80.2, 20, address);
+
+            DeliveryCenter shipment = new DeliveryCenter();
+
+            shipment.AddShipment(standard); shipment.AddShipment(express);shipment.AddShipment(international);
+
+            Console.WriteLine("====================================================================");
+            Console.WriteLine("Delivery Center");
+            Console.WriteLine("====================================================================");
+            
+            for(int i =0; i < 20; i++)
+            {
+                Shipment shipment0 = shipment[i];
+                if(shipment0 != null)
+                {
+                    shipment0.PrintShipment();
+                    Console.WriteLine();
+                    Console.WriteLine("\n-------------------------------------------------------------");
+                }
+            }
+            Console.WriteLine("====================================================================");
+
+            Console.WriteLine("\n\nTracking Status");
+            ITrackable[] trackables = new ITrackable[] { standard, express, international };
+            foreach(ITrackable trackable in trackables)
+            {
+                Console.WriteLine(trackable.GetTrackingStatus());
+            }
+            Console.WriteLine("\n-------------------------------------------------------------");
+
+            Console.WriteLine("\n====================================================================");
+
+            Console.WriteLine("\n\nTracking Status");
+            IInsurable[] insurables = new IInsurable[] { standard, express, international };
+            foreach (IInsurable insurable in insurables)
+            {
+                Console.WriteLine($"({insurable.GetType().Name})=> {insurable.CalculateInsurance()}%");
+            }
+            Console.WriteLine("\n-------------------------------------------------------------");
+
+
+            #endregion
+
         }
     }
 }
